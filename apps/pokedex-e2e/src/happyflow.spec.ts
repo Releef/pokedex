@@ -1,6 +1,6 @@
 import { test, expect, Page } from '@playwright/test';
 
-// Happy flow: browse 5 Pokémon of different types, add to team, then remove all
+// Happy flow: exercise filtering and sorting, then add 5 Pokémon of different types to team, then remove all
 // We pick well-known, distinct-type Pokémon to avoid ambiguity from multi-type filtering.
 const picks = [
   { name: 'bulbasaur' }, // grass/poison
@@ -34,8 +34,43 @@ async function getTeamListItems(page: Page) {
   return page.locator('mat-sidenav app-pokemon-list mat-list button');
 }
 
-test('happy flow: add 5 Pokémon of different types to team, then remove all', async ({ page }) => {
+// async function getFirstListItemName(page: Page) {
+//   const first = page.locator('mat-sidenav app-pokemon-list mat-list button').first();
+//   await first.waitFor({ state: 'visible' });
+//   return (await first.locator('h3').first().textContent())?.trim() ?? '';
+// }
+
+test('happy flow: filtering and sorting on Home, then add 5 Pokémon to team and remove all', async ({ page }) => {
   await page.goto('/');
+
+  // Wait for the Home UI and list to be ready (robust across browsers)
+  await page.getByRole('listbox', { name: /Filter by type/i }).waitFor({ state: 'visible' });
+  const listItems = page.locator('mat-sidenav app-pokemon-list mat-list button');
+  await expect.poll(async () => await listItems.count(), { timeout: 30000 }).toBeGreaterThan(0);
+  await expect(listItems.first()).toBeVisible({ timeout: 30000 });
+
+  // --- Sorting ---
+  // Sort by Name ascending
+  await page.getByRole('button', { name: 'Name', exact: true }).click();
+
+  // Toggle sort direction and assert the icon flips (robust regardless of list content)
+  const dirButton = page.locator('button:has(mat-icon:has-text("arrow_upward")), button:has(mat-icon:has-text("arrow_downward"))').first();
+  const dirIcon = dirButton.locator('mat-icon');
+  const dirBefore = (await dirIcon.textContent())?.trim();
+  await dirButton.click();
+  await expect(dirIcon).toHaveText(dirBefore === 'arrow_upward' ? 'arrow_downward' : 'arrow_upward');
+
+  // --- Filtering ---
+  const typeListbox = page.getByRole('listbox', { name: /Filter by type/i });
+  await typeListbox.getByRole('option', { name: /^fire$/i }).click();
+  // After filtering by fire, the first visible item should display 'fire' in its type line
+  await expect(page.locator('mat-sidenav app-pokemon-list mat-list button').first()).toContainText(/fire/i);
+
+  // Reset to All types
+  await typeListbox.getByRole('option', { name: /^All types$/i }).click();
+
+  // Clear any search before starting add flow
+  await page.getByPlaceholder('Search by name, type or #id').fill('');
 
   // Add 5 Pokémon (different types) to the team from Home
   for (const p of picks) {
