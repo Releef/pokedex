@@ -34,12 +34,6 @@ async function getTeamListItems(page: Page) {
   return page.locator('mat-sidenav app-pokemon-list mat-list button');
 }
 
-// async function getFirstListItemName(page: Page) {
-//   const first = page.locator('mat-sidenav app-pokemon-list mat-list button').first();
-//   await first.waitFor({ state: 'visible' });
-//   return (await first.locator('h3').first().textContent())?.trim() ?? '';
-// }
-
 test('happy flow: filtering and sorting on Home, then add 5 Pokémon to team and remove all', async ({ page }) => {
   await page.goto('/');
 
