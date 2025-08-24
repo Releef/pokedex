@@ -21,7 +21,7 @@
             "input": "apps/pokedex/public"
           }
         ],
-        "styles": ["apps/pokedex/src/styles.scss"],
+        "styles": ["apps/pokedex/src/styles.scss", "apps/pokedex/src/tailwind.css"],
         "server": "apps/pokedex/src/main.server.ts",
         "ssr": {
           "entry": "apps/pokedex/src/server.ts"

@@ -1,0 +1,27 @@
+<div class="w-full h-full flex flex-col min-h-0">
+  @if (title()) {
+    <div class="flex gap-2 items-baseline p-4">
+      <span>{{ title() }}</span>
+      <span class="opacity-70 tabular-nums">{{ count() }}</span>
+    </div>
+  }
+
+  <cdk-virtual-scroll-viewport class="{{viewportClass()}}" [itemSize]="itemSize()" (scrolledIndexChange)="scrolledIndexChange.emit($event)">
+    <mat-list>
+      <ng-container *cdkVirtualFor="let pokemon of items(); trackBy: trackById">
+        <button mat-list-item (click)="itemSelected.emit(pokemon)" class="text-left" [ngClass]="selectedId()===pokemon.id ? 'bg-black/5' : ''">
+          <img matListItemAvatar [ngSrc]="pokemon.pokemonsprites[0].sprites.front_default ?? ''" [alt]="pokemon.name"
+               loading="lazy" height="64" width="64" />
+          <h3 matListItemTitle class="capitalize">{{ pokemon.name }}</h3>
+          <div matListItemLine>
+            @for (t of pokemon.pokemontypes; track t.type.name; let last = $last) {
+              <span class="capitalize">{{ t.type.name }}
+                @if (!last) { <span> / </span> }
+              </span>
+            }
+          </div>
+        </button>
+      </ng-container>
+    </mat-list>
+  </cdk-virtual-scroll-viewport>
+</div>

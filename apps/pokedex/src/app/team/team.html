@@ -1,0 +1,35 @@
+<app-page-shell title="My Team">
+  <button mat-button routerLink="/" nav>
+    <mat-icon>home</mat-icon>
+    Home
+  </button>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-[min(420px,52vw)]" toolbar-actions>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput placeholder="Search by name or #id" [(ngModel)]="search" />
+  </mat-form-field>
+
+  <mat-sidenav-container class="h-[calc(100dvh-64px)]">
+    <mat-sidenav mode="side" opened class="w-[360px] flex flex-col min-h-0 overflow-hidden">
+      <app-pokemon-list
+        title="My Team"
+        [count]="$count()"
+        [items]="teamList()"
+        [selectedId]="selected?.id"
+        [itemSize]="64"
+        (itemSelected)="select($event)"
+      />
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="content p-4">
+        <app-pokemon-details
+          [pokemon]="selected"
+          [showAddButton]="false"
+          [inTeam]="true"
+          [canAddToTeam]="false"
+          (removeRequested)="removeSelectedFromTeam()"
+        />
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</app-page-shell>

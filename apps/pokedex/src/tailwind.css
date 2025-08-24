@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+
+@theme {
+  --inset-none: 'none';
+
+  --height-fold: calc(100vh - 64px);
+  --height-screen-p2: calc(100vh - 8px);
+  --height-screen-3\/4: 75vh;
+
+  --min-height-fold: calc(100vh - 8rem - 2px);
+
+  --max-width-banner: 528px;
+  --max-width-128: 32rem;
+
+  --min-width-136: 34rem;
+
+  --width-112: 28rem;
+  --width-120: 30rem;
+  --width-128: 32rem;
+  --width-136: 34rem;
+
+  --grid-template-rows-7: repeat(7, minmax(0, 78px));
+  --grid-template-rows-9: repeat(9, minmax(0, 1fr));
+
+  --box-shadow-z1: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  --box-shadow-z2: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  --box-shadow-z3: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+  --box-shadow-z4: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  --box-shadow-z5: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12);
+  --box-shadow-z6: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+  --box-shadow-z7: 0px 4px 5px -2px rgba(0, 0, 0, 0.2), 0px 7px 10px 1px rgba(0, 0, 0, 0.14), 0px 2px 16px 1px rgba(0, 0, 0, 0.12);
+  --box-shadow-z8: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+}
+
+

@@ -1,0 +1,69 @@
+@let pokemon$ = pokemon();
+
+@if (pokemon$) {
+  <mat-card class="detail-pane">
+    <mat-card-header>
+      <div mat-card-avatar class="bg-contain bg-center bg-no-repeat"
+           [style.background-image]="'url(' + (pokemon$.pokemonsprites[0].sprites.front_default || '') + ')' "></div>
+      <mat-card-title class="capitalize">
+        {{ pokemon$.name }}
+        <span class="opacity-60 font-normal ml-1.5">#{{ pokemon$.id }}</span>
+      </mat-card-title>
+    </mat-card-header>
+
+    <img class="w-40 mx-auto block [image-rendering:pixelated]" [ngSrc]="pokemon$.pokemonsprites[0].sprites.front_default || ''" [alt]="pokemon$.name"
+         width="256" height="256" />
+
+    <mat-card-content>
+      <mat-chip-set aria-label="pokemon types">
+        @for (t of pokemon$.pokemontypes; track t.type.name) {
+          <mat-chip [ngClass]="typeClass(t.type.name)" class="capitalize m-0.5">
+            {{ t.type.name }}
+          </mat-chip>
+        }
+      </mat-chip-set>
+
+      <mat-list>
+        @for (s of pokemon$.pokemonstats; track s.stat.name) {
+        <mat-list-item>
+          <p matListItemTitle>{{s.stat.name}}</p>
+          <div matListItemLine>
+            <mat-progress-bar mode="determinate" [value]="statPercent(s.base_stat)"></mat-progress-bar>
+          </div>
+          <p matListItemMeta>{{s.base_stat}}</p>
+        </mat-list-item>
+        }
+      </mat-list>
+
+      <mat-divider></mat-divider>
+
+      <div aria-label="pokemon moves">
+        <mat-chip-set>
+          @for (m of pokemon$.pokemonmoves; track m.move.name) {
+            <mat-chip class="capitalize m-0.5">{{ m.move.name }}</mat-chip>
+          }
+        </mat-chip-set>
+      </div>
+    </mat-card-content>
+
+    @if (showAddButton() || inTeam()) {
+      <mat-card-actions>
+        @if (showAddButton()) {
+          <button mat-flat-button color="primary"
+                  (click)="addRequested.emit()"
+                  [disabled]="!canAddToTeam() || inTeam()">
+            <mat-icon>group_add</mat-icon>
+            <span>Add to team</span>
+          </button>
+        }
+        @if (inTeam()) {
+          <button mat-stroked-button color="warn"
+                  (click)="removeRequested.emit()">
+            <mat-icon>group_remove</mat-icon>
+            <span>Remove from team</span>
+          </button>
+        }
+      </mat-card-actions>
+    }
+  </mat-card>
+}

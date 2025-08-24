@@ -1,0 +1,38 @@
+<app-page-shell title="Pokédex">
+  <button mat-button routerLink="/team" nav>
+    <mat-icon>groups</mat-icon>
+    Team
+  </button>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-[min(420px,52vw)]" toolbar-actions>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput placeholder="Search by name, type or #id" [(ngModel)]="search" (ngModelChange)="onSearchChange($event)" />
+  </mat-form-field>
+
+  <mat-sidenav-container class="h-[calc(100dvh-64px)]">
+    <mat-sidenav mode="side" opened class="w-[360px] flex flex-col min-h-0">
+      <app-pokemon-list
+        title="All Pokémon"
+        [count]="$count()"
+        [items]="pokedexFromStore()"
+        [selectedId]="selected?.id"
+        [itemSize]="64"
+        [viewportClass]="'flex-1 h-[calc(100dvh-128px)] overflow-hidden'"
+        (itemSelected)="select($event)"
+        (scrolledIndexChange)="onIndexChange($event)"
+      />
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="content p-4">
+        <app-pokemon-details
+          [pokemon]="selected"
+          [showAddButton]="true"
+          [canAddToTeam]="!isTeamFull()"
+          [inTeam]="isInTeam()"
+          (addRequested)="addSelectedToTeam()"
+          (removeRequested)="removeSelectedFromTeam()"
+        />
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</app-page-shell>
