@@ -55,23 +55,23 @@ export class PokemonDetails {
   typeClass(type: string): string {
     switch ((type || '').toLowerCase()) {
       case 'grass':
-        return 'bg-green-100 text-green-800';
+        return 'type-chip--grass';
       case 'poison':
-        return 'bg-purple-100 text-purple-800';
+        return 'type-chip--poison';
       case 'fire':
-        return 'bg-orange-100 text-orange-800';
+        return 'type-chip--fire';
       case 'water':
-        return 'bg-blue-100 text-blue-800';
+        return 'type-chip--water';
       case 'electric':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'type-chip--electric';
       case 'normal':
-        return 'bg-gray-200 text-gray-800';
+        return 'type-chip--normal';
       case 'fairy':
-        return 'bg-pink-100 text-pink-800';
+        return 'type-chip--fairy';
       case 'ghost':
-        return 'bg-violet-100 text-violet-800';
+        return 'type-chip--ghost';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'type-chip--default';
     }
   }
 }

@@ -1,8 +1,12 @@
 <mat-toolbar color="primary" class="sticky top-0 z-20">
-  <span class="font-semibold tracking-[0.3px]">{{ title() }}</span>
-  <ng-content select="[nav]"></ng-content>
-  <span class="flex-1"></span>
-  <ng-content select="[toolbar-actions]"></ng-content>
+  <mat-toolbar-row>
+    <span class="font-semibold tracking-[0.3px]">{{ title() }}</span>
+    <ng-content select="[nav]"></ng-content>
+    <span class="flex-1"></span>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="!h-auto py-2">
+    <ng-content select="[toolbar-actions]"></ng-content>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <ng-content></ng-content>

@@ -12,3 +12,87 @@ html {
     density: 0
   ));
 }
+
+
+// Per-type Material Chips color overrides for Pokémon types
+// We scope overrides to the chip element via semantic classes produced by typeClass()
+.type-chip--grass {
+  @include mat.chips-overrides((
+    label-text-color: white,
+    elevated-container-color: #63BC5A,
+    outline-color: #63BC5A,
+    selected-label-text-color: white
+  ));
+}
+
+.type-chip--poison {
+  @include mat.chips-overrides((
+    label-text-color: white,
+    elevated-container-color: #B567CE,
+    outline-color: #B567CE,
+    selected-label-text-color: white
+  ));
+}
+
+.type-chip--fire {
+  @include mat.chips-overrides((
+    label-text-color: white,
+    elevated-container-color: #F08030,
+    outline-color: #F08030,
+    selected-label-text-color: white
+  ));
+}
+
+.type-chip--water {
+  @include mat.chips-overrides((
+    label-text-color: white,
+    elevated-container-color: #6890F0,
+    outline-color: #6890F0,
+    selected-label-text-color: white
+  ));
+}
+
+.type-chip--electric {
+  @include mat.chips-overrides((
+    label-text-color: black,
+    elevated-container-color: #F8D030,
+    outline-color: #F8D030,
+    selected-label-text-color: black
+  ));
+}
+
+.type-chip--normal {
+  @include mat.chips-overrides((
+    label-text-color: black,
+    elevated-container-color: #A8A878,
+    outline-color: #A8A878,
+    selected-label-text-color: black
+  ));
+}
+
+.type-chip--fairy {
+  @include mat.chips-overrides((
+    label-text-color: black,
+    elevated-container-color: #EE99AC,
+    outline-color: #EE99AC,
+    selected-label-text-color: black
+  ));
+}
+
+.type-chip--ghost {
+  @include mat.chips-overrides((
+    label-text-color: white,
+    elevated-container-color: #70559B,
+    outline-color: #70559B,
+    selected-label-text-color: white
+  ));
+}
+
+.type-chip--default {
+  @include mat.chips-overrides((
+    label-text-color: black,
+    elevated-container-color: #E0E0E0,
+    outline-color: #E0E0E0,
+    selected-label-text-color: black
+  ));
+}

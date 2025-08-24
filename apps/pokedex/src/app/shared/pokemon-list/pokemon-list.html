@@ -9,7 +9,7 @@
   <cdk-virtual-scroll-viewport class="{{viewportClass()}}" [itemSize]="itemSize()" (scrolledIndexChange)="scrolledIndexChange.emit($event)">
     <mat-list>
       <ng-container *cdkVirtualFor="let pokemon of items(); trackBy: trackById">
-        <button mat-list-item (click)="itemSelected.emit(pokemon)" class="text-left" [ngClass]="selectedId()===pokemon.id ? 'bg-black/5' : ''">
+        <button mat-list-item (click)="itemSelected.emit(pokemon)" class="text-left" [ngClass]="selectedId()===pokemon.id ? 'bg-black/5 mat-mdc-list-item-activated' : ''">
           <img matListItemAvatar [ngSrc]="pokemon.pokemonsprites[0].sprites.front_default ?? ''" [alt]="pokemon.name"
                loading="lazy" height="64" width="64" />
           <h3 matListItemTitle class="capitalize">{{ pokemon.name }}</h3>

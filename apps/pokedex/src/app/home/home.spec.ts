@@ -4,9 +4,9 @@ import { Home } from './home';
 import {
   initPokedex,
   loadMore,
-  selectFilteredCount,
-  selectFilteredPokedex,
-  setQuery,
+  selectAllPokedex,
+  selectCount,
+  selectLoaded,
 } from '@pokedex/pokedex-state';
 import { addToTeam, removeFromTeam, selectAllTeamState } from '@pokedex/team-state';
 import { Pokemon } from '@pokedex/types';
@@ -31,9 +31,10 @@ describe('Home', () => {
       providers: [
         provideMockStore({
           selectors: [
-            { selector: selectFilteredPokedex, value: [bulbasaur] },
-            { selector: selectFilteredCount, value: 1 },
+            { selector: selectAllPokedex, value: [bulbasaur] },
+            { selector: selectCount, value: 1 },
             { selector: selectAllTeamState, value: [] },
+            { selector: selectLoaded, value: true },
           ],
         }),
       ],
@@ -63,22 +64,25 @@ describe('Home', () => {
     expect(items[0].sprite).toContain('/pokemon/1.png');
   });
 
-  it('select sets selected', () => {
-    expect(component.selected).toBeNull();
+  it('auto-selects the first item and updates on manual selection', () => {
+    // Auto-select should pick the first item from the list
+    expect(component.selected).toEqual(bulbasaur);
+    // Manual selection of the same item should keep it selected
     component.select(bulbasaur);
     expect(component.selected).toEqual(bulbasaur);
   });
 
-  it('onSearchChange dispatches setQuery with trimmed value', () => {
+  it('onSearchChange updates local search with trimmed value and does not dispatch', () => {
     const spy = jest.spyOn(store, 'dispatch');
     component.onSearchChange('  pika  ');
-    expect(spy).toHaveBeenCalledWith(setQuery({ query: 'pika' }));
+    expect(component.search).toBe('pika');
+    expect(spy).not.toHaveBeenCalled();
   });
 
   it('onIndexChange dispatches loadMore when nearing end', () => {
     const spy = jest.spyOn(store, 'dispatch');
     // set count to 30
-    store.overrideSelector(selectFilteredCount, 30);
+    store.overrideSelector(selectCount, 30);
     store.refreshState();
     component.onIndexChange(20); // 20 > 30 - 15 => true
     expect(spy).toHaveBeenCalledWith(loadMore());
@@ -172,8 +176,8 @@ describe('Home', () => {
   });
 
   it('typeClass returns expected class names', () => {
-    expect(component.typeClass('grass')).toContain('green');
-    expect(component.typeClass('FIRE')).toContain('orange');
-    expect(component.typeClass('unknown')).toContain('gray');
+    expect(component.typeClass('grass')).toContain('type-chip--grass');
+    expect(component.typeClass('FIRE')).toContain('type-chip--fire');
+    expect(component.typeClass('unknown')).toContain('type-chip--default');
   });
 });

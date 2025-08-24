@@ -3,17 +3,41 @@
     <mat-icon>groups</mat-icon>
     Team
   </button>
-  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-[min(420px,52vw)]" toolbar-actions>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-[min(420px,52vw)]" nav>
     <mat-icon matPrefix>search</mat-icon>
     <input matInput placeholder="Search by name, type or #id" [(ngModel)]="search" (ngModelChange)="onSearchChange($event)" />
   </mat-form-field>
+
+  <!-- Type filter chips on first actions row; sorting buttons below -->
+  <div toolbar-actions class="flex flex-col gap-2 w-full">
+    <div class="w-full overflow-x-auto whitespace-nowrap">
+      <mat-chip-listbox aria-label="Filter by type" class="w-full">
+        <mat-chip-option [ngClass]="'type-chip--default'" [selected]="!selectedType()" (click)="selectedType.set(null)">All types</mat-chip-option>
+        <mat-chip-option
+          *ngFor="let t of types()"
+          [ngClass]="typeClass(t)"
+          [selected]="selectedType() === t"
+          (click)="selectedType.set(selectedType() === t ? null : t)"
+        >{{ t }}</mat-chip-option>
+      </mat-chip-listbox>
+    </div>
+
+    <div class="flex items-center gap-1">
+      <button mat-stroked-button [color]="sortBy() === 'id' ? 'primary' : undefined" (click)="sortBy.set('id')">#</button>
+      <button mat-stroked-button [color]="sortBy() === 'name' ? 'primary' : undefined" (click)="sortBy.set('name')">Name</button>
+      <button mat-stroked-button [color]="sortBy() === 'type' ? 'primary' : undefined" (click)="sortBy.set('type')">Type</button>
+      <button mat-stroked-button (click)="sortDir.set(sortDir() === 'asc' ? 'desc' : 'asc')">
+        <mat-icon>{{ sortDir() === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+      </button>
+    </div>
+  </div>
 
   <mat-sidenav-container class="h-[calc(100dvh-64px)]">
     <mat-sidenav mode="side" opened class="w-[360px] flex flex-col min-h-0">
       <app-pokemon-list
         title="All Pokémon"
-        [count]="$count()"
-        [items]="pokedexFromStore()"
+        [count]="filteredSorted().length"
+        [items]="filteredSorted()"
         [selectedId]="selected?.id"
         [itemSize]="64"
         [viewportClass]="'flex-1 h-[calc(100dvh-128px)] overflow-hidden'"
