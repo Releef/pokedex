@@ -27,6 +27,7 @@ import { addToTeam, removeFromTeam, selectAllTeamState } from '@pokedex/team-sta
 import { PageShellComponent } from '../shared/page-shell/page-shell';
 import { PokemonList } from '../shared/pokemon-list/pokemon-list';
 import { PokemonDetails } from '../shared/pokemon-details/pokemon-details';
+import { typeClass } from '@pokedex/utility';
 
 @Component({
   selector: 'app-home',
@@ -97,30 +98,6 @@ export class Home implements OnInit {
       .filter(Boolean)
       .sort();
     return names[0] ?? '';
-  }
-
-  typeClass(t: string | null | undefined): string {
-    const key = (t ?? '').toString().toLowerCase();
-    switch (key) {
-      case 'grass':
-        return 'type-chip--grass green';
-      case 'fire':
-        return 'type-chip--fire orange';
-      case 'water':
-        return 'type-chip--water blue';
-      case 'electric':
-        return 'type-chip--electric yellow';
-      case 'poison':
-        return 'type-chip--poison purple';
-      case 'ghost':
-        return 'type-chip--ghost indigo';
-      case 'normal':
-        return 'type-chip--normal gray';
-      case 'fairy':
-        return 'type-chip--fairy pink';
-      default:
-        return 'type-chip--default gray';
-    }
   }
 
   filteredSorted = computed<Pokemon[]>(() => {
@@ -249,4 +226,5 @@ export class Home implements OnInit {
     this._store.dispatch(removeFromTeam({ id: sel.id }));
   }
 
+  protected readonly typeClass = typeClass;
 }

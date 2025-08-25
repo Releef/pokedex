@@ -15,6 +15,7 @@ import { NgClass, NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { Pokemon } from '@pokedex/types';
 import { MatList, MatListItem } from '@angular/material/list';
+import { typeClass } from '@pokedex/utility';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -52,26 +53,5 @@ export class PokemonDetails {
     return Math.min(100, Math.round((value / max) * 100));
   }
 
-  typeClass(type: string): string {
-    switch ((type || '').toLowerCase()) {
-      case 'grass':
-        return 'type-chip--grass';
-      case 'poison':
-        return 'type-chip--poison';
-      case 'fire':
-        return 'type-chip--fire';
-      case 'water':
-        return 'type-chip--water';
-      case 'electric':
-        return 'type-chip--electric';
-      case 'normal':
-        return 'type-chip--normal';
-      case 'fairy':
-        return 'type-chip--fairy';
-      case 'ghost':
-        return 'type-chip--ghost';
-      default:
-        return 'type-chip--default';
-    }
-  }
+  protected readonly typeClass = typeClass;
 }

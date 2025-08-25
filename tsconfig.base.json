@@ -17,7 +17,8 @@
     "paths": {
       "@pokedex/pokedex-state": ["libs/pokedex-state/src/index.ts"],
       "@pokedex/team-state": ["libs/team-state/src/index.ts"],
-      "@pokedex/types": ["libs/types/src/index.ts"]
+      "@pokedex/types": ["libs/types/src/index.ts"],
+      "@pokedex/utility": ["libs/utility/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

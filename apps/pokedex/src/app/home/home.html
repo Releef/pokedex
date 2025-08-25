@@ -13,12 +13,13 @@
     <div class="w-full overflow-x-auto whitespace-nowrap">
       <mat-chip-listbox aria-label="Filter by type" class="w-full">
         <mat-chip-option [ngClass]="'type-chip--default'" [selected]="!selectedType()" (click)="selectedType.set(null)">All types</mat-chip-option>
-        <mat-chip-option
-          *ngFor="let t of types()"
-          [ngClass]="typeClass(t)"
-          [selected]="selectedType() === t"
-          (click)="selectedType.set(selectedType() === t ? null : t)"
-        >{{ t }}</mat-chip-option>
+        @for (t of types(); track t) {
+          <mat-chip-option
+            [ngClass]="typeClass(t)"
+            [selected]="selectedType() === t"
+            (click)="selectedType.set(selectedType() === t ? null : t)"
+          >{{ t }}</mat-chip-option>
+        }
       </mat-chip-listbox>
     </div>
 
